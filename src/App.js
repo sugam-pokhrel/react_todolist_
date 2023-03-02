@@ -1,24 +1,42 @@
-import logo from './logo.svg';
+import Todo from './Todo';
+import { useState,useRef } from 'react';
 import './App.css';
+import { v4 as uuidv4 } from 'uuid';
 
 function App() {
+
+
+  const [text,setText]=useState([{id:1,name:"todo1",iscompleted:false}]);
+  const todoref=useRef();
+  function handletodo(e){
+    const name=todoref.current.value
+    if(name==='') return
+
+    setText(prev=>{
+
+      return[...prev,{id:uuidv4(),name:'todo2',iscompleted:false}]
+    })
+
+    console.log(name)
+    todoref.current.value=null;
+
+
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+<>
+<Todo text={text}/>
+<br />
+<input ref={todoref} type="text" />
+
+
+<br />
+
+<button onClick={handletodo}>AddTodo</button>
+<br />
+<button>ClearComplete</button>
+
+</>
   );
 }
 
